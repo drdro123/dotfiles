@@ -2,13 +2,12 @@
 
 # Install oh-my-zsh
 echo "Installing oh-my-zsh"
-
-if ping -c 1 github.com &> /dev/null
-then
-  KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-else
-  echo "Connection to github unsuccessful. Retrying with external proxy"
-  KEEP_ZSHRC=yes \
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh --proxy http://proxy.bloomberg.com:81)"
-fi
-
+{
+    # Attempt direct connection to github (5s timeout)
+    KEEP_ZSHRC=yes \
+    sh -c "$(curl -fsSL -m 5 https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+} || {
+    # If that fails, retry with proxy (also 5s timeout)
+    KEEP_ZSHRC=yes \
+    sh -c "$(curl -fsSL -m 5 https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh --proxy http://proxy.bloomberg.com:81)"
+}
