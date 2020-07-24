@@ -1,0 +1,14 @@
+#/bin/zsh
+
+# Install oh-my-zsh
+echo "Installing oh-my-zsh"
+
+if ping -c 1 github.com &> /dev/null
+then
+  KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+else
+  echo "Connection to github unsuccessful. Retrying with external proxy"
+  KEEP_ZSHRC=yes \
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh --proxy http://proxy.bloomberg.com:81)"
+fi
+
