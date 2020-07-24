@@ -1,5 +1,8 @@
 #/bin/zsh
 
+# Remember git credentials
+git config --global credential.helper store
+
 # Install oh-my-zsh
 echo "Installing oh-my-zsh"
 {
